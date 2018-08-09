@@ -35,8 +35,8 @@ internal class DetailViewController: UIViewController {
         
         if #available(iOS 11.0, *) {
             scrollView.contentInsetAdjustmentBehavior = .never
-        } 
-
+        }
+        
         self.snap = UIScreen.main.snapshotView(afterScreenUpdates: true)
         self.view.addSubview(blurView)
         self.view.addSubview(scrollView)
@@ -65,12 +65,12 @@ internal class DetailViewController: UIViewController {
         
     }
     
-
+    
     override func viewWillAppear(_ animated: Bool) {
         scrollView.addSubview(card.backgroundIV)
         self.delegate?.cardWillShowDetailView?(card: self.card)
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         
         //originalFrame = scrollView.frame
@@ -87,15 +87,15 @@ internal class DetailViewController: UIViewController {
             detail.frame = CGRect(x: 0,
                                   y: card.backgroundIV.bounds.maxY,
                                   width: scrollView.frame.width,
-                                  height: detail.frame.height)
-             
-            scrollView.contentSize = CGSize(width: scrollView.bounds.width, height: detail.frame.maxY)
+                                  height: CGRect(origin: .zero, size: detail.systemLayoutSizeFitting(UILayoutFittingCompressedSize)).height)
+            
+            scrollView.contentSize = CGSize(width: scrollView.bounds.width, height: detail.frame.maxY + 50)
             
             xButton.frame = CGRect (x: scrollView.frame.maxX - 20 - 40,
                                     y: scrollView.frame.minY + 20,
                                     width: 40,
                                     height: 40)
-
+            
         }
         
         self.delegate?.cardDidShowDetailView?(card: self.card)
@@ -134,7 +134,7 @@ internal class DetailViewController: UIViewController {
             scrollView.frame = view.bounds
             scrollView.frame.origin.y = 0
             
-        // Layout for present in non-fullscreen
+            // Layout for present in non-fullscreen
         } else {
             scrollView.frame.size = CGSize(width: LayoutHelper.XScreen(85), height: LayoutHelper.YScreen(100) - 20)
             scrollView.center = blurView.center
@@ -173,10 +173,10 @@ extension DetailViewController: UIScrollViewDelegate {
         if (y<0) {
             scrollView.frame.origin.y -= y/2
             scrollView.contentOffset.y = 0
-        
-          // Behavior when scroll view is pulled down and then up
+            
+            // Behavior when scroll view is pulled down and then up
         } else if ( offset > 0) {
-          
+            
             scrollView.contentOffset.y = 0
             scrollView.frame.origin.y -= y/2
         }
@@ -240,13 +240,13 @@ class XButton: UIButton {
         
         xPath.move(to: CGPoint(x: rect.maxX - inset, y: inset))
         xPath.addLine(to: CGPoint(x: inset, y: rect.maxY - inset))
-    
+        
         xLayer.path = xPath.cgPath
         
         xLayer.strokeColor = UIColor.white.cgColor
         xLayer.lineWidth = 2.0
         self.layer.addSublayer(xLayer)
-    
+        
         circle.frame = rect
         circle.layer.cornerRadius = circle.bounds.width / 2
         circle.clipsToBounds = true

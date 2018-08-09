@@ -105,6 +105,15 @@ import UIKit
             detailVC.isFullscreen = fullscreen
         }
     }
+    
+    public func shouldPresent( _ contentView: UIView, from superVC: UIViewController?, fullscreen: Bool = false) {
+        self.superVC = superVC
+        detailVC.detailView = contentView
+        detailVC.card = self
+        detailVC.delegate = self.delegate
+        detailVC.isFullscreen = fullscreen
+    }
+    
     /**
      If the card should display parallax effect.
      */
@@ -146,7 +155,7 @@ import UIKit
         self.addGestureRecognizer(tap)
         tap.delegate = self
         tap.cancelsTouchesInView = false
-       
+        
         detailVC.transitioningDelegate = self
         
         // Adding Subviews
@@ -198,7 +207,7 @@ import UIKit
             resetAnimated()
         }
     }
-
+    
     
     //MARK: - Animations
     
@@ -231,7 +240,7 @@ import UIKit
 }
 
 
-    //MARK: - Transition Delegate
+//MARK: - Transition Delegate
 
 extension Card: UIViewControllerTransitioningDelegate {
     
@@ -245,7 +254,7 @@ extension Card: UIViewControllerTransitioningDelegate {
     
 }
 
-    //MARK: - Gesture Delegate
+//MARK: - Gesture Delegate
 
 extension Card: UIGestureRecognizerDelegate {
     
@@ -268,7 +277,7 @@ extension Card: UIGestureRecognizerDelegate {
 }
 
 
-	//MARK: - Helpers
+//MARK: - Helpers
 
 extension UILabel {
     
