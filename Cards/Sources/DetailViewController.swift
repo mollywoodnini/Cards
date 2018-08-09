@@ -10,7 +10,7 @@ import UIKit
 internal class DetailViewController: UIViewController {
     
     var blurView = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight ))
-    weak var detailView: UIView?
+    var detailView: UIView?
     var scrollView = UIScrollView()
     var snap = UIView()
     weak var card: Card!
